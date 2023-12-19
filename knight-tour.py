@@ -2,6 +2,8 @@
 class KnightTour:
     n = 8
     iters = 0
+    solution = [[]]
+
     starting_point_x = 0
     starting_point_y = 0
 
@@ -20,7 +22,7 @@ class KnightTour:
         self.end_point_y = end_point_y
         self.closed_tour = closed_tour
 
-    def is_available(self, x, y, board, pos):
+    def is_available(self, x, y, board, pos) -> bool:
         if (x >= 0 and y >= 0 and x < self.n and y < self.n and board[x][y] == -1):
             if (pos == (self.n**2 - 1) and self.closed_tour == True):
                 if (x != self.end_point_x or y != self.end_point_y):
@@ -28,7 +30,7 @@ class KnightTour:
             return True
         return False
 
-    def print_solution(self, board):
+    def print_solution(self, board) -> None:
         print("Iterations: ", self.iters)
         print("Solution: ")
         for i in range(self.n):
@@ -36,7 +38,7 @@ class KnightTour:
                 print(board[i][j], end=' ')
             print()
 
-    def solve_knigh_tour(self):
+    def solve_knigh_tour(self) -> None:
 
         board = [[-1 for i in range(self.n)] for i in range(self.n)]
         board[self.starting_point_x][self.starting_point_y] = 0
@@ -48,10 +50,11 @@ class KnightTour:
             self.print_solution(board)
             print("Knight Tour Completed")
 
-    def knight_tour_util(self, board, curr_x, curr_y, pos):
+    def knight_tour_util(self, board, curr_x, curr_y, pos) -> bool:
         self.iters += 1
 
         if (pos == self.n**2):
+            self.solution = board
             return True
 
         for i in range(8):
@@ -65,6 +68,9 @@ class KnightTour:
 
                 board[new_x][new_y] = -1
         return False
+
+    def get_solution(self):
+        return self.solution
 
 
 if __name__ == "__main__":
